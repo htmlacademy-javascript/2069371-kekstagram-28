@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Радыгин Михаил](https://up.htmlacademy.ru/javascript/28/user/2069371).
-* Наставник: `Неизвестно`.
+* Наставник: [Никита Сигов](https://htmlacademy.ru/profile/crazer).
 
 ---
 
