@@ -13,12 +13,13 @@ lengthString('проверяемая строка', 10);
 
 //Проверка строк на палиндром
 function palindromCheck (word) {
+  const temp = word.toLowerCase().replaceAll(' ', '');
   let reverseWord = '';
-  for (let i = word.length - 1; i >= 0; i--) {
-    reverseWord += word[i];
+  for (let i = temp.length - 1; i >= 0; i--) {
+    reverseWord += temp[i];
   }
 
-  if (word.toLowerCase().replaceAll(' ', '') === reverseWord.toLowerCase().replaceAll(' ', '')) {
+  if (temp === reverseWord) {
     return true;
   }
   return false;
