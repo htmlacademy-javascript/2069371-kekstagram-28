@@ -1,8 +1,10 @@
 const PICTURE_COUNT = 25;
 const LIKE_MIN = 15;
 const LIKE_MAX = 200;
+const COMMENTS_MIN = 1;
+const COMMENTS_MAX = 3;
 
-const USER_NAME = [
+const USER_NAMES = [
   'Михаил',
   'Данил',
   'Матвей',
@@ -59,25 +61,29 @@ const createRandomId = (min, max) => {
   };
 };
 
-const createId = createRandomId(1, 25);
-const createIdUrl = createRandomId(1, 25);
-const createIdComment = createRandomId(1, 25);
+const createIdComment = createRandomId(1, 111);
 
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
 const createComment = () => ({
   id: createIdComment(),
-  name: getRandomArrayElement(USER_NAME),
+  name: getRandomArrayElement(USER_NAMES),
   avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
   message: getRandomArrayElement(COMMENTS),
 });
 
-const createPictures = () => ({
-  id: createId(),
-  url: `photos/${ createIdUrl() }.jpg`,
-  description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(LIKE_MIN, LIKE_MAX),
-  comment: createComment(),
-});
+
+const createPictures = (_, i) => {
+  const id = i + 1;
+
+  return {
+    id: id,
+    url: `photos/${ id }.jpg`,
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getRandomInteger(LIKE_MIN, LIKE_MAX),
+    comment: Array.from({length:getRandomInteger(COMMENTS_MIN ,COMMENTS_MAX)}, createComment),
+  };
+};
 
 const getPictures = () => Array.from({length: PICTURE_COUNT}, createPictures);
+getPictures();
