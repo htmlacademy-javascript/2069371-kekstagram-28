@@ -61,3 +61,32 @@ addSymbolToString('1', 4, '0');
 addSymbolToString('q', 4, 'werty');
 addSymbolToString('q', 4, 'we');
 addSymbolToString('qwerty', 4, '0');
+
+const getRandomInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
+
+const createRandomId = (min, max) => {
+  const previousValues = [];
+
+  return function () {
+    let currentValue = getRandomInteger(min, max);
+    if (previousValues.length >= (max - min + 1)) {
+      return null;
+    }
+    while (previousValues.includes(currentValue)) {
+      currentValue = getRandomInteger(min, max);
+    }
+    previousValues.push(currentValue);
+    return currentValue;
+  };
+};
+
+const createIdComment = createRandomId(1, 111);
+
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+export {getRandomInteger, createIdComment, getRandomArrayElement};
