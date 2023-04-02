@@ -12,7 +12,7 @@ function renderingPhotos (element){
     picturesElement.querySelector('.picture__comments').textContent = data.comment.length;
     picturesFragment.appendChild(picturesElement);
 
-    const openFullSize = () => picturesElement.addEventListener('click', renderFullPhoto(data));
+    const openFullSize = () => renderFullPhoto(data);
     picturesElement.addEventListener('click', openFullSize);
 
   });
