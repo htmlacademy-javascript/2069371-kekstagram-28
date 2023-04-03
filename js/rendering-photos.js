@@ -1,18 +1,23 @@
-import { getPictures } from './data.js';
+import {renderFullPhoto} from './rendering-full-photo.js';
 
 const picture = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
 const picturesFragment = document.createDocumentFragment();
 
-const renderingPhotos = getPictures();
+function renderingPhotos (element){
+  element.forEach((data) => {
+    const picturesElement = pictureTemplate.cloneNode(true);
+    picturesElement.querySelector('.picture__img').src = data.url;
+    picturesElement.querySelector('.picture__likes').textContent = data.likes;
+    picturesElement.querySelector('.picture__comments').textContent = data.comment.length;
+    picturesFragment.appendChild(picturesElement);
 
-renderingPhotos.forEach(({url, likes, comment}) => {
-  const picturesElement = pictureTemplate.cloneNode(true);
-  picturesElement.querySelector('.picture__img').src = url;
-  picturesElement.querySelector('.picture__likes').textContent = likes;
-  picturesElement.querySelector('.picture__comments').textContent = comment.length;
-  picturesFragment.appendChild(picturesElement);
-});
+    const openFullSize = () => renderFullPhoto(data);
+    picturesElement.addEventListener('click', openFullSize);
 
-picture.appendChild(picturesFragment);
+  });
+
+  picture.appendChild(picturesFragment);
+}
+
+export {renderingPhotos};
