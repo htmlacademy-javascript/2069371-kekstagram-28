@@ -3,7 +3,7 @@ const PICTURE_COUNT = 25;
 const LIKE_MIN = 15;
 const LIKE_MAX = 200;
 const COMMENTS_MIN = 1;
-const COMMENTS_MAX = 3;
+const COMMENTS_MAX = 15;
 
 const USER_NAMES = [
   'Михаил',
