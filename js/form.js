@@ -36,73 +36,43 @@ const getHashtagsArr = (hashtagsStr) => (
 );
 
 const validateFirstSymbol = (value) => (
-  getHashtagsArr(value).reduce(
-    (result, hashtag) => {
-      if (hashtag !== '') {
-        result = result && hashtag[0] === '#';
-      }
-      return result;
-    },
-    true
-  )
+  getHashtagsArr(value).every((hashtag) => hashtag[0] === '#')
 );
 
-const validateMinLength = (value) => (
-  getHashtagsArr(value).reduce(
-    (result, hashtag) => {
-      if (hashtag.length === 1) {
-        result = result && hashtag !== '#';
-      }
-      return result;
-    },
-    true
-  )
-);
+const validateMinLength = (value) => {
+  const hashtagsArr = getHashtagsArr(value);
+  return hashtagsArr.every((hashtag) => hashtag.length > 1 || hashtag !== '#');
+};
 
 const validateLetterAndNumber = (value) => (
-  getHashtagsArr(value).reduce(
-    (result, hashtag) => {
-      if (hashtag.length > 1) {
-        result = result && regex.test(hashtag);
-      }
-      return result;
-    },
-    true
-  )
+  getHashtagsArr(value).every((hashtag) => {
+    if (hashtag.length > 1) {
+      return regex.test(hashtag);
+    }
+    return true;
+  })
 );
 
+
 const validateDivider = (value) => (
-  getHashtagsArr(value).reduce(
-    (result, hashtag) => {
-      if (hashtag.length > 1) {
-        result = result && !hashtag.includes('#', 1);
-      }
-      return result;
-    },
-    true
+  getHashtagsArr(value).every((result, hashtag) => {
+    if (hashtag.length > 1) {
+      result = result && !hashtag.includes('#', 1);
+    }
+    return result;
+  },
+  true
   )
 );
 
 const validateMaxLength = (value) => (
-  getHashtagsArr(value).reduce(
-    (result, hashtag) => (result && hashtag.length <= hashtags.SYMBOLS),
-    true
-  )
+  getHashtagsArr(value).every((hashtag) => (hashtag.length <= hashtags.SYMBOLS))
 );
 
 const validateNumberOfHashtags = (value) => getHashtagsArr(value).length <= hashtags.COUNT;
 
 const validateNotRepeat = (value) => (
-  getHashtagsArr(value)
-    .reduce(
-      (result, hashtag, index, array) => {
-        if (index + 1 < array.length) {
-          result = result && !array.includes(hashtag, index + 1);
-        }
-        return result;
-      },
-      true,
-    )
+  getHashtagsArr(value).every((hashtag, index, array) => (!array.includes(hashtag, index + 1)))
 );
 
 pristine.addValidator(hashTagInput, validateFirstSymbol, errorMessage.firstGrid);
