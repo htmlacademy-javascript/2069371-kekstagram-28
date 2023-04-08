@@ -1408,3 +1408,9 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__field-wrapper__error {
+  background-color: #ff6d6d;
+  width: fit-content;
+  margin: 0 auto;
+}
