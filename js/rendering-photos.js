@@ -9,7 +9,7 @@ function renderingPhotos (element){
     const picturesElement = pictureTemplate.cloneNode(true);
     picturesElement.querySelector('.picture__img').src = data.url;
     picturesElement.querySelector('.picture__likes').textContent = data.likes;
-    picturesElement.querySelector('.picture__comments').textContent = data.comment.length;
+    picturesElement.querySelector('.picture__comments').textContent = data.comments.length;
     picturesFragment.appendChild(picturesElement);
 
     const openFullSize = () => renderFullPhoto(data);

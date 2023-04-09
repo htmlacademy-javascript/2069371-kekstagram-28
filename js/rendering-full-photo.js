@@ -71,7 +71,7 @@ function renderFullPhoto (data) {
   renderDescriptionPhoto(data);
   document.addEventListener('keydown', closeEsc);
 
-  comments = data.comment;
+  comments = data.comments;
   if (comments.length > 0) {
     renderComments();
   }

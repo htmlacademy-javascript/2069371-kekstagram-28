@@ -6,6 +6,7 @@ const overlay = document.querySelector('.img-upload__overlay');
 const uploadFile = document.querySelector('#upload-file');
 const cancelButton = document.querySelector('#upload-cancel');
 const body = document.querySelector('body');
+const submitButton = document.querySelector('.img-upload__submit');
 const hashTagInput = document.querySelector('.text__hashtags');
 const commentInput = document.querySelector('.text__description');
 const commentLength = 140;
@@ -13,6 +14,11 @@ const regex = /^#[a-zа-яё0-9]{1,19}$/i;
 const hashtags = {
   COUNT: 5,
   SYMBOLS: 20,
+};
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
 };
 
 const errorMessage = {
@@ -154,10 +160,31 @@ const onFileInputChange = () => {
   showModal();
 };
 
-form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+const setOnFormSubmit = (cb) => {
+  form.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if(isValid) {
+      blockSubmitButton();
+      await cb(new FormData(form));
+      unblockSubmitButton();
+    }
+  });
+};
+
 
 uploadFile.addEventListener('change', onFileInputChange);
 cancelButton.addEventListener('click', onCancelButtonClick);
+
+export {setOnFormSubmit, hideModal, onModalKeydown};
