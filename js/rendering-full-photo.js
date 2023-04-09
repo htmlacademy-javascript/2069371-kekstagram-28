@@ -23,7 +23,7 @@ const closeEsc = (evt) => {
 function closeFullPhoto() {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  document.addEventListener('keydown', closeEsc);
+  commentShow = 0;
 }
 
 function addListComments (data) {
@@ -71,7 +71,7 @@ function renderFullPhoto (data) {
   renderDescriptionPhoto(data);
   document.addEventListener('keydown', closeEsc);
 
-  comments = data.comment;
+  comments = data.comments;
   if (comments.length > 0) {
     renderComments();
   }
