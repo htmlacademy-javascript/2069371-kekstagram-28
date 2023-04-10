@@ -1,10 +1,14 @@
 import {renderFullPhoto} from './rendering-full-photo.js';
 
-const picture = document.querySelector('.pictures');
+const pictures = document.querySelector('.pictures');
 const pictureTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const picturesFragment = document.createDocumentFragment();
 
-function renderingPhotos (element){
+const renderingPhotos = (element) => {
+  pictures.querySelectorAll('.picture').forEach((pictureElement) => {
+    pictureElement.remove();
+  });
+
   element.forEach((data) => {
     const picturesElement = pictureTemplate.cloneNode(true);
     picturesElement.querySelector('.picture__img').src = data.url;
@@ -17,7 +21,6 @@ function renderingPhotos (element){
 
   });
 
-  picture.appendChild(picturesFragment);
-}
-
+  pictures.append(picturesFragment);
+};
 export {renderingPhotos};

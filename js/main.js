@@ -1,10 +1,14 @@
-import {renderingPhotos} from './rendering-photos.js';
+import { renderingPhotos } from './rendering-photos.js';
 import './scale.js';
 import './effects.js';
 import { getData, sendData } from './api.js';
-import { showAlert } from './util.js';
+import { showAlert, debounce } from './util.js';
 import { setOnFormSubmit, hideModal } from './form.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
+import './upload-file.js';
+import './filter.js';
+import { init, getFilteredPictures} from './filter.js';
+
 
 setOnFormSubmit(async (data) => {
   try {
@@ -18,7 +22,9 @@ setOnFormSubmit(async (data) => {
 
 try {
   const data = await getData();
-  renderingPhotos(data);
+  const debouncedRenderGallery = debounce(renderingPhotos);
+  init(data, debouncedRenderGallery);
+  renderingPhotos(getFilteredPictures());
 } catch (err) {
   showAlert(err);
 }
